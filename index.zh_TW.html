@@ -1,4 +1,4 @@
-<!doctype html>
+<！doctype html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -13,10 +13,10 @@
     <script src="js/jq/fancyzoom/fancyzoom.js" type="text/javascript"></script>
     <script src="js/core.js" type="text/javascript"></script>
     <script src="js/scale.fix.js" type="text/javascript"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
+    <meta name="viewport" content="width=device-width， initial-scale=1， user-scalable=no">
+    <！--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <！[endif]-->
   </head>
   <body>
     <div class="wrapper">
@@ -30,7 +30,7 @@
           <li><a class="buttons github" href="https://github.com/ckhung/plurk-list">View On GitHub</a></li>
         </ul>
 
-        <p class="header">作者: <a class="header name"
+        <p class="header">作者： <a class="header name"
 	href="https://github.com/ckhung">資訊人權貴</a></p>
 
 
@@ -38,96 +38,104 @@
       <section>
         <h3>一、 簡介</h3>
 
-<p>我習慣把噗浪當做自己的閱讀書籤, 然後把 <a href=
-"http://people.ofset.org/~ckhung/g/p/plurks.php">
-所有的噗蒐集在一個頁面</a>, 方便查詢。
-噗浪官方是有提供備份功能沒錯, 但是速度超級慢、
-疑似會遺漏、 而且一個月限制只能備份一次,
+<p>我習慣把噗浪當做自己的閱讀書籤， 然後把 <a href=
+"http://user.frdm.info/ckhung/g/p/plurks.php">
+所有的噗蒐集在一個頁面</a>， 方便查詢。
+噗浪官方是有提供備份功能沒錯， 但是速度超級慢、
+疑似會遺漏、 而且一個月限制只能備份一次，
 每次備份又必須從頭開始而不能指定從上次結束的地方開始。
 這讓我一方面覺得很難用、 一方面也很不忍心經常折磨它。
 
 <p>還好噗浪提供了一個開放的 rss 介面 -- 這也是為什麼我會用它而不用
-facebook 的原因之一。 如果定期備份 rss,
+facebook 的原因之一。 如果定期備份 rss，
 其實從這裡面也可重建完整的歷史記錄。
-正好最近學會使用 <a href=
-"http://newtoypia.blogspot.tw/2013/04/querypath-dom-xpath.html">
-QueryPath</a>, 所以就用它寫了兩支小程式 rss2wget.php 及 strip.php
-(總共不到 50 列) 來協助備份噗浪。 我所開的這個 plurk-list
-計畫與其說是提供這兩支程式, 不如說是提供 「半手工備份噗浪」
-的說明文件 (也就是本頁面)。
-它主要是用來備份自己的噗浪; 不過也可以拿來備份他人任何公開的噗浪 --
-當然只限於從你設好 crontab 之後的噗。
 
-<p>本頁所提供的方法適用於喜歡看到簡單易懂/易改 php 原始碼的 linux 用戶,
-而且河道必須是開放的。
-如果是 windows 用戶或是私密河道或是嫌太麻煩的讀者,
+<p>我所開的這個 plurk-list 計畫， 裡面包含
+rss2html.php 及 strip.php 兩支小程式， 以及本文件，
+目的就是要協助噗浪用戶採用比較輕便且高自由度的方式來備份噗浪。 
+它主要是用來備份自己的噗浪； 不過也可以拿來備份他人任何公開的噗浪。
+要使用這兩支小程式， 你必須 （1） 可以從 shell 命令列下 php 指令
+（2） 有定期在備份你自己的或某人河道的 rss -- 例如使用 crontab。
+
+<p>因為底層採用 「分析 html/xml 檔案」 的超便利工具 <a href=
+"http://newtoypia.blogspot.tw/2013/04/querypath-dom-xpath.html">
+QueryPath</a>， 所以這兩支小程式總共不到 100 列。
+與其說是提供這兩支程式， 不如說是提供 「半手工備份噗浪」
+的說明文件 （也就是本頁面）。
+
+<p>本頁所提供的方法適用於河道開放的 linux 用戶。
+如果你偏好看到簡單易懂/易改的原始碼， 本頁面特別適合你。
+如果是 windows 用戶或是私密河道或是嫌下指令太麻煩的讀者，
 可參考其他作者所提供、 更友善使用者的
 <a href="http://www.wabow.com/bkplurk/">網頁界面</a> 或
 <a href="http://twweeb.org/plurk-backup/">windows 可執行檔</a>。
 
         <h3>二、 使用方式</h3>
 
-<p>假設你已下載 plurk-list 本工具/文件包、 解壓縮、
-更改目錄名稱並放在你的家目錄下, 最後叫它
-~/plurk-list/ 子目錄, 而底下有 rss2wget.php 及 strip.php 兩支小程式。
+<p>假設你從 githgub <a href=
+"https://github.com/ckhung/plurk-list/archive/master.zip">
+下載</a> plurk-list 本工具/文件包， 然後解壓縮、
+更改目錄名稱並放在你的家目錄下， 最後叫它
+~/plurk-list/ 子目錄， 而底下有 rss2html.php 及 strip.php 兩支小程式。
 以下就拿我的噗浪河道 <a href="http://www.plurk.com/ckhung0">
-資訊人權貴</a> 作為範例, 說明如何備份。
+資訊人權貴</a> 作為範例， 說明如何備份。
 
-<p>第一步, 先用噗浪官方的備份功能備出 ckhung0-backup.zip
-(或請參考內附的範例版本 ckhung0-backup.zip, 見最後一節 「重要檔案清單」)。
+<p>第一步， 先用噗浪官方的備份功能備出 ckhung0-backup.zip
+（或請參考內附的範例版本 ckhung0-backup.zip， 見最後一節 「重要檔案清單」）。
 假設你在 ~/plurk-backup/ 子目錄底下解壓縮。
-出現一個 plurks/ 子目錄, 裡面每一噗是一個獨立的 html 檔。
-進入子目錄, 執行
+出現一個 plurks/ 子目錄， 裡面每一噗是一個獨立的 html 檔。
+進入子目錄， 執行
 <code>php ~/plurk-list/strip.php 4sxz6e.html 4sy6gc.html 4vh8z8.html</code>
 會用 <code>&lt;li&gt;</code> 印出這三個噗的摘要。
-如果 ok 的話, 就 <code>php ~/plurk-list/strip.php *.html &gt; old.php</code>
-這個新產生的 old.php 可以被手工貼入 (或用 php 的 include 指令納入)
+如果 ok 的話， 就 <code>~/plurk-list/strip.php *.html &gt; old.php</code>
+這個新產生的 old.php 可以被手工貼入 （或用 php 的 include 指令納入）
 你的 「噗浪歷史存檔頁面」 骨架。
 
-<p>第二步, 要在某部 24 小時連線的 linux 伺服器上設定定期抓取自己噗浪的 rss。
+<p>第二步， 要在某部 24 小時連線的 linux 伺服器上設定定期抓取自己噗浪的 rss。
 請先確認 <a href="http://newtoypia.blogspot.tw/2013/05/vim.html">
-你會用 vim 或已把系統預設編輯器改成自己熟悉的工具</a>,
-並且建立一個空目錄 ~/plurk-backup/rss/ 。
+你會用 vim 或已把系統預設編輯器改成自己熟悉的工具</a>，
+並且建立一個空目錄 ~/plurklogs/ 。
 然後建立一個 shell script 叫做 /home/ckhung/cron/weekly
-(記得設定成成可執行! <code>chmod u+x /home/ckhung/cron/weekly</code>)
-裡面只放一句話:
+（記得設定成成可執行！ <code>chmod u+x /home/ckhung/cron/weekly</code>）
+裡面只放一句話：
 <pre class="code">
-    wget http://www.plurk.com/ckhung0.xml -O /home/ckhung/plurk-backup/rss/plurk-$(date '+%y%W').xml
+    wget http：//www.plurk.com/ckhung0.xml -O /home/ckhung/plurklogs/plurk-$（date '+%y%W'）.xml
 </pre>
-<p>寫好之後不妨先直接執行一次, 看看是否產生一個名為 ~/plurk-backup/rss/plurk-*.xml 的檔案。
+<p>寫好之後不妨先直接執行一次， 看看是否產生一個名為 ~/plurk-backup/rss/plurk-*.xml 的檔案。
 這裡的 <code>date '+%y%W'</code> 是在用 date 指令產生一個短短的
-「年份週次」 數字, 並嵌入檔名, 以免新的版本覆蓋掉舊的版本。
-然後用 <code>crontab -e</code> 指令叫出編輯器、 加入下面這列,
-指定每星期六 25 點 87 分固定執行剛剛那個 script:
+「年份週次」 數字， 並嵌入檔名， 以免新的版本覆蓋掉舊的版本。
+然後用 <code>crontab -e</code> 指令叫出編輯器、 加入下面這列，
+指定每星期六 25 點 87 分固定執行剛剛那個 script：
 <pre class="code">
     87 25 * * 6 /home/ckhung/cron/weekly
 </pre>
-<p>這裡故意用 「不存在的時分」 是為了要避免大家照抄, 害噗浪感受到 DDOS :-)
-如果你的噗量很大, 也許要改成每天備份。
+<p>這裡故意用 「不存在的時分」 是為了要避免大家照抄， 害噗浪感受到 DDOS ：-）
+如果你的噗量很大， 也許要改成每天備份： (1) 上面的 date 指令改成
+<code>date '+%y%m%d'</code> 以年月日作為 rss 存檔名稱。
+(2) crontab 的內容改成 <code>87 25 * * * ...</code>。
+再把 weekly 的檔名改成 daily 就更準確了。
 
-<p>第三步, 以後每隔一段時間可以去把所有的 plurk-*.xml 收割回來,
-並且用我寫的 rss2wget.php 處理這些 xml 檔: <code>php ~/plurk-list/rss2wget.php plurk-*.xml</code>
-應該會印出一堆指令:
-<pre class="code">
-    sleep 5; wget http://www.plurk.com/p/ihhuco -O ihhuco.html
-    sleep 5; wget http://www.plurk.com/p/ih5a03 -O ih5a03.html
-    ...
-</pre>
-<p>如果正確的話, 就可以: <code>php ~/plurk-list/rss2wget.php plurk-*.xml
-| bash</code> 叫它去從每一噗的永久網址抓下來。
-每抓兩噗之間讓噗浪官網休息五秒。
-如果 ok 的話, 就 <code>php ~/plurk-list/strip.php *.html &gt; new.php</code>
-再把這個新產生的 new.php 手工貼入舊的備份檔當中。
+<p>第三步， 以後每隔一段時間可以去把所有的 plurk-*.xml 收割回來，
+並且用我寫的 rss2html.php 處理這些 xml 檔： <code>rss2html.php $(ls *.xml | sort -r) &gt; new-plurks.html</code>
+如果 ok 的話， 就把這個新產生的 new.php 手工貼入舊的備份檔當中，
+並刪掉與舊的備份檔重複的幾個噗。
+
+<p>補充說明： rss2html.php 的命令列上可以接受多個 *.xml 檔名作為參數。
+這些檔案的順序必須是由新到舊。
+(所以上面需要 <code>ls *.xml | sort -r</code>)
+這樣 rss2html.php 才能正確地按順忽略其中重複出現的噗。
 
 
         <h3>三、 重要檔案清單</h3>
 
 <ol>
-<li>strip.php : 從完整的一噗頁面抓出主噗文 (不含回應), 變成一個
+<li>strip.php ： 從完整的一噗頁面抓出主噗文 （不含回應）， 變成一個
 &lt;li&gt;</li>
-<li>rss2wget.php : 從 rss 檔產生一堆 wget 指令</li>
-<li>ckhung0-backup.zip : 官方所產生的「資訊人權貴」噗浪備份,
-精簡版, 只含 2010 年 4-6 月的資料。</li>
+<li>rss2html.php ： 從一堆 rss 檔產生 html 版的噗浪內容</li>
+<li>ckhung0-backup.zip ： 範例資料檔 -- 官方所產生的「資訊人權貴」噗浪備份，
+精簡版， 只含 2010 年 4-6 月的資料。</li>
+<li>ckhung0-plurklogs.zip ： 範例資料檔 -- 資訊人權貴 2014
+年當中一段時間每週 rss 的備份資料。
 </ol>
 
       </section>
