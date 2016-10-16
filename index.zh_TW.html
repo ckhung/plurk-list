@@ -1,4 +1,4 @@
-<！doctype html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
     <script src="js/core.js" type="text/javascript"></script>
     <script src="js/scale.fix.js" type="text/javascript"></script>
     <meta name="viewport" content="width=device-width， initial-scale=1， user-scalable=no">
-    <！--[if lt IE 9]>
+    <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <！[endif]-->
+    <![endif]-->
   </head>
   <body>
     <div class="wrapper">
@@ -39,7 +39,7 @@
         <h3>一、 簡介</h3>
 
 <p>我習慣把噗浪當做自己的閱讀書籤， 然後把 <a href=
-"http://user.frdm.info/ckhung/g/p/plurks.php">
+"https://www.cyut.edu.tw/~ckhung/g/p/plurks.php">
 所有的噗蒐集在一個頁面</a>， 方便查詢。
 噗浪官方是有提供備份功能沒錯， 但是速度超級慢、
 疑似會遺漏、 而且一個月限制只能備份一次，
@@ -50,8 +50,7 @@
 facebook 的原因之一。 如果定期備份 rss，
 其實從這裡面也可重建完整的歷史記錄。
 
-<p>我所開的這個 plurk-list 計畫， 裡面包含
-rss2html.php 及 strip.php 兩支小程式， 以及本文件，
+<p>本計畫包含一支小程式 rss2html.php 及本文件，
 目的就是要協助噗浪用戶採用比較輕便且高自由度的方式來備份噗浪。 
 它主要是用來備份自己的噗浪； 不過也可以拿來備份他人任何公開的噗浪。
 要使用這兩支小程式， 你必須 （1） 可以從 shell 命令列下 php 指令
@@ -59,9 +58,9 @@ rss2html.php 及 strip.php 兩支小程式， 以及本文件，
 
 <p>因為底層採用 「分析 html/xml 檔案」 的超便利工具 <a href=
 "http://newtoypia.blogspot.tw/2013/04/querypath-dom-xpath.html">
-QueryPath</a>， 所以這兩支小程式總共不到 100 列。
-與其說是提供這兩支程式， 不如說是提供 「半手工備份噗浪」
-的說明文件 （也就是本頁面）。
+QueryPath</a> (rss2html.php 使用的是 QueryPath 3.0.5 版)，
+所以這支小程式不到 100 列。 與其說是提供我的兩支小程式，
+不如說是提供 「半手工備份噗浪」 的說明文件 （也就是本頁面）。
 
 <p>本頁所提供的方法適用於河道開放的 linux 用戶。
 如果你偏好看到簡單易懂/易改的原始碼， 本頁面特別適合你。
@@ -70,30 +69,30 @@ QueryPath</a>， 所以這兩支小程式總共不到 100 列。
 <a href="http://www.wabow.com/bkplurk/">網頁界面</a> 或
 <a href="http://twweeb.org/plurk-backup/">windows 可執行檔</a>。
 
-        <h3>二、 使用方式</h3>
+        <h3>二、 rss 轉 html 練習</h3>
 
-<p>假設你從 githgub <a href=
-"https://github.com/ckhung/plurk-list/archive/master.zip">
-下載</a> plurk-list 本工具/文件包， 然後解壓縮、
-更改目錄名稱並放在你的家目錄下， 最後叫它
-~/plurk-list/ 子目錄， 而底下有 rss2html.php 及 strip.php 兩支小程式。
-以下就拿我的噗浪河道 <a href="http://www.plurk.com/ckhung0">
-資訊人權貴</a> 作為範例， 說明如何備份。
+<p>下載解壓縮本程式之後， 請<strong>再解壓縮</strong> ckhung0-plurklogs.zip。
+這是範例資料檔， 裡面包含 <a href="http://www.plurk.com/ckhung0">
+「資訊人權貴」</a> 河道上好幾週的 rss 備份。
 
-<p>第一步， 先用噗浪官方的備份功能備出 ckhung0-backup.zip
-（或請參考內附的範例版本 ckhung0-backup.zip， 見最後一節 「重要檔案清單」）。
-假設你在 ~/plurk-backup/ 子目錄底下解壓縮。
-出現一個 plurks/ 子目錄， 裡面每一噗是一個獨立的 html 檔。
-進入子目錄， 執行
-<code>php ~/plurk-list/strip.php 4sxz6e.html 4sy6gc.html 4vh8z8.html</code>
-會用 <code>&lt;li&gt;</code> 印出這三個噗的摘要。
-如果 ok 的話， 就 <code>~/plurk-list/strip.php *.html &gt; old.php</code>
-這個新產生的 old.php 可以被手工貼入 （或用 php 的 include 指令納入）
-你的 「噗浪歷史存檔頁面」 骨架。
+<p>進入該目錄， 可以這樣處理這些 xml 檔：
+<code>rss2html.php $(ls *.xml | sort -r) &gt; new-plurks.html</code>
+這樣就產生了新的備份檔。 
+注意： rss2html.php 的命令列上可以接受多個 *.xml 檔名作為參數，
+但這些檔案的順序必須是<strong>由新到舊</strong>。
+(所以上面需要 <code>ls *.xml | sort -r</code>)
+這樣 rss2html.php 才能正確地按順忽略其中重複出現的噗。
 
-<p>第二步， 要在某部 24 小時連線的 linux 伺服器上設定定期抓取自己噗浪的 rss。
-請先確認 <a href="http://newtoypia.blogspot.tw/2013/05/vim.html">
-你會用 vim 或已把系統預設編輯器改成自己熟悉的工具</a>，
+<p>從舊的備份檔裡找到最後備份到的一噗，
+來這個新的備份檔裡， 把它以下的所有資料全部刪掉。
+再把這個新的備份檔手工貼入舊的備份檔當中。
+
+        <h3>三、 定期備份你的 rss</h3>
+
+<p>要如何產生你自己的一堆 *.xml 檔呢?
+要在某部 24 小時連線的 linux 伺服器上設定定期抓取自己噗浪的 rss。
+請先確認 <a href="http://newtoypia.blogspot.tw/2014/09/vim.html">
+你會用 vim</a> 或已把系統預設編輯器改成自己熟悉的工具，
 並且建立一個空目錄 ~/plurklogs/ 。
 然後建立一個 shell script 叫做 /home/ckhung/cron/weekly
 （記得設定成成可執行！ <code>chmod u+x /home/ckhung/cron/weekly</code>）
@@ -109,34 +108,30 @@ QueryPath</a>， 所以這兩支小程式總共不到 100 列。
 <pre class="code">
     87 25 * * 6 /home/ckhung/cron/weekly
 </pre>
+
 <p>這裡故意用 「不存在的時分」 是為了要避免大家照抄， 害噗浪感受到 DDOS ：-）
 如果你的噗量很大， 也許要改成每天備份： (1) 上面的 date 指令改成
 <code>date '+%y%m%d'</code> 以年月日作為 rss 存檔名稱。
 (2) crontab 的內容改成 <code>87 25 * * * ...</code>。
 再把 weekly 的檔名改成 daily 就更準確了。
 
-<p>第三步， 以後每隔一段時間可以去把所有的 plurk-*.xml 收割回來，
-並且用我寫的 rss2html.php 處理這些 xml 檔： <code>rss2html.php $(ls *.xml | sort -r) &gt; new-plurks.html</code>
-如果 ok 的話， 就把這個新產生的 new.php 手工貼入舊的備份檔當中，
-並刪掉與舊的備份檔重複的幾個噗。
+<p>這樣， 以後每隔一段時間就可以去 /home/ckhung/plurklogs/
+底下把 *.xml 收割回來用 rss2html 加工成 html 檔。
 
-<p>補充說明： rss2html.php 的命令列上可以接受多個 *.xml 檔名作為參數。
-這些檔案的順序必須是由新到舊。
-(所以上面需要 <code>ls *.xml | sort -r</code>)
-這樣 rss2html.php 才能正確地按順忽略其中重複出現的噗。
+        <h3>四、 處理更早的備份資料</h3>
 
-
-        <h3>三、 重要檔案清單</h3>
-
-<ol>
-<li>strip.php ： 從完整的一噗頁面抓出主噗文 （不含回應）， 變成一個
-&lt;li&gt;</li>
-<li>rss2html.php ： 從一堆 rss 檔產生 html 版的噗浪內容</li>
-<li>ckhung0-backup.zip ： 範例資料檔 -- 官方所產生的「資訊人權貴」噗浪備份，
-精簡版， 只含 2010 年 4-6 月的資料。</li>
-<li>ckhung0-plurklogs.zip ： 範例資料檔 -- 資訊人權貴 2014
-年當中一段時間每週 rss 的備份資料。
-</ol>
+<p>[本節內容及 strip.php 程式是 2012 年左右寫的，
+可能已過時。 若有讀者提供新版的官網備份資料檔， 我再來更新。]
+在你看到本頁之前、 還沒有開始備份 rss 的時候，
+過去的那些噗， 就必須先用噗浪官方的備份功能才能挖出來。
+例如 ckhung0-backup.zip 是官網版的我的備份資料。
+解壓縮之後， 裡面每一噗是一個獨立的 html 檔。 進入子目錄， 執行
+<code>php strip.php 4sxz6e.html 4sy6gc.html 4vh8z8.html</code>
+會用 <code>&lt;li&gt;</code> 印出這三個噗的摘要。
+如果 ok 的話， 就 <code>php strip.php *.html &gt; old.html</code>
+當然， 你另外還需要自己準備一個 「噗浪歷史存檔頁面」 骨架，
+然後就可以把上面產生的 old.html 貼入
+（或用 php 的 include 指令納入） 骨架檔。
 
       </section>
       <footer>
